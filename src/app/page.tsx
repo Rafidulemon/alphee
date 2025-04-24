@@ -1,103 +1,170 @@
-import Image from "next/image";
+import CategoryCard from "./components/CategoryCard";
+import Banner from "./components/Home/Banner";
+import ProductCard from "./components/product/ProductCard";
+
+const new_arrivals = [
+  {
+    id: "PDS001",
+    name: "Premium Drop Shoulder - Chocolate",
+    imageUrl: "/images/products/tshirts/1.jpg",
+    regularPrice: 2200,
+    discountedPrice: 1800,
+  },
+  {
+    id: "PDS002",
+    name: "Premium Drop Shoulder - Lavanderash",
+    imageUrl: "/images/products/tshirts/2.jpg",
+    regularPrice: 2200,
+    discountedPrice: 1800,
+  },
+  {
+    id: "PDS003",
+    name: "Premium Drop Shoulder - Ice Berg Green",
+    imageUrl: "/images/products/tshirts/3.jpg",
+    regularPrice: 2200,
+    discountedPrice: 1800,
+  },
+  {
+    id: "PDS004",
+    name: "Premium Drop Shoulder - Silver",
+    imageUrl: "/images/products/tshirts/4.jpg",
+    regularPrice: 2200,
+    discountedPrice: 1800,
+  },
+];
+
+const best_selling = [
+  {
+    id: "punjabi1",
+    name: "Black Premium Punjabi",
+    imageUrl: "/images/products/punjabi/1.jpg",
+    regularPrice: 2200,
+    discountedPrice: 1800,
+  },
+  {
+    id: "polo001",
+    name: "PK Polo - Iceberg Green",
+    imageUrl: "/images/products/polo/1.jpg",
+    regularPrice: 2200,
+    discountedPrice: 1800,
+  },
+  {
+    id: "punjabi3",
+    name: "PK Polo - Navy",
+    imageUrl: "/images/products/polo/2.jpg",
+    regularPrice: 2200,
+    discountedPrice: 1800,
+  },
+  {
+    id: "punjabi4",
+    name: "Premium Cuban Shirt - White",
+    imageUrl: "/images/products/shirts/cuban_half/7.jpg",
+    regularPrice: 2200,
+    discountedPrice: 1800,
+  },
+];
+
+const flash_sale = [
+  {
+    id: "punjabi1",
+    name: "Premium Cotton Punjabi",
+    imageUrl: "/images/products/punjabi/7.jpg",
+    regularPrice: 2200,
+    discountedPrice: 1800,
+  },
+  {
+    id: "punjabi2",
+    name: "Premium Cotton Punjabi",
+    imageUrl: "/images/products/punjabi/4.jpg",
+    regularPrice: 2200,
+    discountedPrice: 1800,
+  },
+  {
+    id: "punjabi3",
+    name: "Premium Cotton Punjabi",
+    imageUrl: "/images/products/punjabi/3.jpg",
+    regularPrice: 2200,
+    discountedPrice: 1800,
+  },
+  {
+    id: "punjabi4",
+    name: "Premium Cotton Punjabi",
+    imageUrl: "/images/products/punjabi/1.jpg",
+    regularPrice: 2200,
+    discountedPrice: 1800,
+  },
+];
+
+const categories = [
+  {
+    name: "Accessories",
+    slug: "accessories",
+    imageUrl: "/images/categories/accesories.jpg",
+  },
+  { name: "Watch", slug: "watch", imageUrl: "/images/categories/watch.jpg" },
+  { name: "Shirt", slug: "shirt", imageUrl: "/images/categories/shirt.jpg" },
+  { name: "Pant", slug: "pant", imageUrl: "/images/categories/pant.jpg" },
+  {
+    name: "Punjabi",
+    slug: "punjabi",
+    imageUrl: "/images/categories/punjabi.jpg",
+  },
+  { name: "Polo", slug: "polo", imageUrl: "/images/categories/polo.jpg" },
+  {
+    name: "T-shirt",
+    slug: "t-shirt",
+    imageUrl: "/images/categories/tshirt.jpg",
+  },
+  { name: "Belt", slug: "belt", imageUrl: "/images/categories/belt.jpg" },
+  {
+    name: "Wallet",
+    slug: "wallet",
+    imageUrl: "/images/categories/wallet.jpeg",
+  },
+];
+
+const ProductSection = ({
+  title,
+  products,
+}: {
+  title: string;
+  products: typeof new_arrivals;
+}) => (
+  <div className="p-10 flex flex-col gap-6 w-full justify-center items-center">
+    <span className="text-2xl font-bold text-[#d3b47f] text-center">
+      {title}
+    </span>
+
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {products.map((product) => (
+        <ProductCard key={product.id} {...product} />
+      ))}
+    </div>
+    <button className="text-primary cursor-pointer">View All</button>
+  </div>
+);
+
+const CategorySection = () => (
+  <div className="p-10 flex flex-col gap-6 w-full justify-center items-center">
+    <span className="text-2xl font-bold text-[#d3b47f] text-center">
+      CATEGORIES
+    </span>
+    <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+      {categories.map((category, index) => (
+        <CategoryCard key={index} {...category} />
+      ))}
+    </div>
+  </div>
+);
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+    <div className="w-full text-red-500">
+      <Banner />
+      <ProductSection title="NEW ARRIVALS" products={new_arrivals} />
+      <CategorySection />
+      <ProductSection title="BEST SELLING" products={best_selling} />
+      <ProductSection title="🔥FLASH SALE🔥" products={flash_sale} />
     </div>
   );
 }
