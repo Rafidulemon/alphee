@@ -79,14 +79,14 @@ export default function Header() {
 
           <Link
             href="/account"
-            className="text-secondary hover:text-black hidden md:inline"
+            className="text-secondary hover:text-primary hidden md:inline"
           >
             <User className="w-5 h-5" />
           </Link>
 
           <Link
             href="/cart"
-            className="relative text-secondary hover:text-black"
+            className="relative text-secondary hover:text-primary"
           >
             <ShoppingCart className="w-5 h-5" />
             <span className="absolute -top-2 -right-2 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-bold leading-none text-white bg-red-600 rounded-full">
