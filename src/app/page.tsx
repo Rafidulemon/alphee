@@ -1,6 +1,9 @@
+"use client";
+
 import CategoryCard from "./components/CategoryCard";
 import Banner from "./components/Home/Banner";
 import ProductCard from "./components/product/ProductCard";
+import { useRouter } from "next/navigation";
 
 const new_arrivals = [
   {
@@ -9,6 +12,7 @@ const new_arrivals = [
     imageUrl: "/images/products/tshirts/1.jpg",
     regularPrice: 2200,
     discountedPrice: 1800,
+    label: "Sale",
   },
   {
     id: "PDS002",
@@ -16,6 +20,7 @@ const new_arrivals = [
     imageUrl: "/images/products/tshirts/2.jpg",
     regularPrice: 2200,
     discountedPrice: 1800,
+    label: "Sale",
   },
   {
     id: "PDS003",
@@ -23,6 +28,7 @@ const new_arrivals = [
     imageUrl: "/images/products/tshirts/3.jpg",
     regularPrice: 2200,
     discountedPrice: 1800,
+    label: "Sale",
   },
   {
     id: "PDS004",
@@ -30,6 +36,7 @@ const new_arrivals = [
     imageUrl: "/images/products/tshirts/4.jpg",
     regularPrice: 2200,
     discountedPrice: 1800,
+    label: "Sale",
   },
 ];
 
@@ -40,6 +47,7 @@ const best_selling = [
     imageUrl: "/images/products/punjabi/1.jpg",
     regularPrice: 2200,
     discountedPrice: 1800,
+    label: "Best Selling",
   },
   {
     id: "polo001",
@@ -47,6 +55,7 @@ const best_selling = [
     imageUrl: "/images/products/polo/1.jpg",
     regularPrice: 2200,
     discountedPrice: 1800,
+    label: "Best Selling",
   },
   {
     id: "punjabi3",
@@ -54,6 +63,7 @@ const best_selling = [
     imageUrl: "/images/products/polo/2.jpg",
     regularPrice: 2200,
     discountedPrice: 1800,
+    label: "Best Selling",
   },
   {
     id: "punjabi4",
@@ -61,6 +71,7 @@ const best_selling = [
     imageUrl: "/images/products/shirts/cuban_half/7.jpg",
     regularPrice: 2200,
     discountedPrice: 1800,
+    label: "Best Selling",
   },
 ];
 
@@ -71,6 +82,7 @@ const flash_sale = [
     imageUrl: "/images/products/punjabi/7.jpg",
     regularPrice: 2200,
     discountedPrice: 1800,
+    label: "Flash Sale",
   },
   {
     id: "punjabi2",
@@ -78,6 +90,7 @@ const flash_sale = [
     imageUrl: "/images/products/punjabi/4.jpg",
     regularPrice: 2200,
     discountedPrice: 1800,
+    label: "Flash Sale",
   },
   {
     id: "punjabi3",
@@ -85,6 +98,7 @@ const flash_sale = [
     imageUrl: "/images/products/punjabi/3.jpg",
     regularPrice: 2200,
     discountedPrice: 1800,
+    label: "Flash Sale",
   },
   {
     id: "punjabi4",
@@ -92,6 +106,7 @@ const flash_sale = [
     imageUrl: "/images/products/punjabi/1.jpg",
     regularPrice: 2200,
     discountedPrice: 1800,
+    label: "Flash Sale",
   },
 ];
 
@@ -121,14 +136,19 @@ const categories = [
     slug: "wallet",
     imageUrl: "/images/categories/wallet.jpeg",
   },
-];
+]; 
+
+export default function Home() {
+  const router = useRouter();
 
 const ProductSection = ({
   title,
   products,
+  url,
 }: {
   title: string;
   products: typeof new_arrivals;
+  url: string;
 }) => (
   <div className="p-10 flex flex-col gap-6 w-full justify-center items-center">
     <span className="text-2xl font-bold text-[#d3b47f] text-center">
@@ -137,10 +157,10 @@ const ProductSection = ({
 
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
       {products.map((product) => (
-        <ProductCard key={product.id} {...product} />
+        <ProductCard key={product.id} {...product} label={product.label} />
       ))}
     </div>
-    <button className="text-primary cursor-pointer">View All</button>
+    <button className="text-primary cursor-pointer" onClick={() => router.push(url)}>View All</button>
   </div>
 );
 
@@ -156,15 +176,13 @@ const CategorySection = () => (
     </div>
   </div>
 );
-
-export default function Home() {
   return (
     <div className="w-full text-red-500">
       <Banner />
-      <ProductSection title="NEW ARRIVALS" products={new_arrivals} />
+      <ProductSection title="NEW ARRIVALS" products={new_arrivals} url="/new-arrivals"/>
       <CategorySection />
-      <ProductSection title="BEST SELLING" products={best_selling} />
-      <ProductSection title="🔥FLASH SALE🔥" products={flash_sale} />
+      <ProductSection title="BEST SELLING" products={best_selling} url="/best-selling"/>
+      <ProductSection title="🔥FLASH SALE🔥" products={flash_sale} url="flash-sale"/>
     </div>
   );
 }

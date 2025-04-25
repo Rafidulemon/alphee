@@ -14,7 +14,7 @@ export default function CategoryCard({ name, slug, imageUrl }: CategoryCardProps
   return (
     <Link
       href={`/shop/${slug}`}
-      className="w-[200px] group block rounded-2xl overflow-hidden shadow hover:shadow-lg transition-all duration-300 bg-[#111111]"
+      className="w-[150px] md:w-[200px] group block rounded-2xl overflow-hidden shadow hover:shadow-lg transition-all duration-300 bg-[#111111]"
     >
       {/* Image */}
       <div className="relative w-full h-48 md:h-60">

@@ -10,6 +10,7 @@ interface ProductCardProps {
   imageUrl: string;
   regularPrice: number;
   discountedPrice?: number;
+  label?: string;
 }
 
 export default function ProductCard({
@@ -18,57 +19,78 @@ export default function ProductCard({
   imageUrl,
   regularPrice,
   discountedPrice,
+  label,
 }: ProductCardProps) {
-  return (
-    <div className="w-[150px] md:w-[300px] group block rounded-2xl overflow-hidden shadow hover:shadow-lg transition-all duration-300 bg-[#131313]">
-      {/* Product Image */}
-      <Link href={`/product/${id}`}>
-        <div className="relative w-full h-40 md:h-64">
-          <Image
-            src={imageUrl}
-            alt={name}
-            fill
-            className="object-cover group-hover:scale-105 transition-transform duration-300"
-          />
-        </div>
-      </Link>
+  const discountPercentage = discountedPrice
+    ? Math.round(((regularPrice - discountedPrice) / regularPrice) * 100)
+    : null;
 
-      {/* Product Info */}
-      <div className="p-4 space-y-">
+  return (
+    <div className="w-[150px] md:w-[300px] group block rounded-2xl overflow-hidden shadow hover:shadow-lg transition-all duration-300 bg-[#131313] flex flex-col justify-between">
+      {/* Product Image & Labels */}
+      <div className="w-full flex flex-col">
         <Link href={`/product/${id}`}>
-          <h3 className="text-center font-medium text-sm text-secondary pb-2">
-            {name}
-          </h3>
+          <div className="relative w-full h-40 md:h-64">
+            <Image
+              src={imageUrl}
+              alt={name}
+              fill
+              className="object-cover group-hover:scale-105 transition-transform duration-300"
+            />
+
+            {/* Discount Badge (Top Left) */}
+            {discountPercentage && (
+              <span className="absolute top-2 left-2 bg-red-600 text-white text-xs md:text-sm px-2 py-0.5 rounded-full shadow">
+                -{discountPercentage}%
+              </span>
+            )}
+
+            {/* Label Badge (Top Right) */}
+            {label && (
+              <span className="absolute top-2 right-2 bg-yellow-500 text-black text-xs md:text-sm px-2 py-0.5 rounded-full shadow font-semibold">
+                {label}
+              </span>
+            )}
+          </div>
         </Link>
 
-        <div className="flex items-center space-x-2">
-          {discountedPrice ? (
-            <div className="w-full flex items-center justify-center gap-4">
-              <span className="text-primary font-semibold text-sm md:text-base">
-                ৳{discountedPrice}
-              </span>
-              <span className="text-gray-400 line-through text-xs md:text-sm">
+        {/* Product Info */}
+        <div className="p-4">
+          <Link href={`/product/${id}`}>
+            <h3 className="text-center font-medium text-sm text-secondary pb-2">
+              {name}
+            </h3>
+          </Link>
+
+          <div className="flex items-center justify-center gap-4">
+            {discountedPrice ? (
+              <>
+                <span className="text-primary font-semibold text-sm md:text-base">
+                  ৳{discountedPrice}
+                </span>
+                <span className="text-gray-400 line-through text-xs md:text-sm">
+                  ৳{regularPrice}
+                </span>
+              </>
+            ) : (
+              <span className="text-gray-300 font-medium text-sm md:text-base">
                 ৳{regularPrice}
               </span>
-            </div>
-          ) : (
-            <span className="text-gray-800 font-medium text-sm md:text-base">
-              ৳{regularPrice}
-            </span>
-          )}
+            )}
+          </div>
         </div>
+      </div>
 
-        {/* Buttons */}
-        <div className="mt-3 flex flex-col md:flex-row gap-2">
-          <button className="cursor-pointer flex-1 text-sm text-primary font-medium border border-gray-300 hover:border-primary hover:bg-primary hover:text-white transition rounded px-3 py-1 flex items-center justify-center space-x-1">
-            <ShoppingCart className="w-4 h-4" />
-            <span>Add to Cart</span>
-          </button>
-          <button className="cursor-pointer flex-1 text-sm font-medium bg-primary text-white hover:bg-[#c2a265] transition rounded px-3 py-1 flex items-center justify-center space-x-1">
-            <span>Buy Now</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
-        </div>
+      {/* Buttons */}
+      <div className="mt-3 flex flex-col gap-2 px-4 pb-4">
+        <button className="cursor-pointer flex-1 text-sm text-primary font-medium border border-gray-300 hover:border-primary hover:bg-primary hover:text-white transition rounded px-3 py-1 flex items-center justify-center space-x-1">
+          <ShoppingCart className="w-4 h-4" />
+          <span>Add to Cart</span>
+        </button>
+        <button className="cursor-pointer flex-1 text-sm font-medium bg-primary text-white hover:bg-[#c2a265] transition rounded px-3 py-1 flex items-center justify-center space-x-1">
+          <span>Buy Now</span>
+          <ArrowRight className="w-4 h-4" />
+        </button>
       </div>
     </div>
   );
