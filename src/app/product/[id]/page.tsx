@@ -1,22 +1,24 @@
 "use client";
 
 import Image from "next/image";
-import { ShoppingCart, ArrowRight } from "lucide-react";
+import { useParams } from "next/navigation";
 import { useState } from "react";
-
-const product = {
-  id: "1",
-  name: "Premium Oversized Tee",
-  imageUrl: "/images/products/shirts/cuban_half/7.jpg",
-  regularPrice: 1200,
-  discountedPrice: 950,
-  label: "Best Selling",
-  description:
-    "Crafted from ultra-soft cotton, this oversized tee is your perfect companion for both style and comfort. Ideal for layering or wearing solo.",
-};
+import { ShoppingCart, ArrowRight } from "lucide-react";
+import products from "@/app/data/products.json";
 
 export default function ProductDetailsPage() {
+  const { id } = useParams();
+  const product = products.find((p) => p.id === id);
+
   const [quantity, setQuantity] = useState(1);
+
+  if (!product) {
+    return (
+      <div className="text-white text-center py-20">
+        Product not found.
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#0e0e0e] text-white px-4 sm:px-8 py-10">
@@ -82,7 +84,7 @@ export default function ProductDetailsPage() {
               <ShoppingCart className="w-4 h-4" />
               Add to Cart
             </button>
-            <button className="flex-1 text-sm font-medium bg-primary text-white hover:bg-[#c2a265] transition rounded px-3 py-2 flex items-center justify-center gap-1">
+            <button className="cursor-pointer flex-1 text-sm font-medium bg-primary text-white hover:bg-[#c2a265] transition rounded px-3 py-2 flex items-center justify-center gap-1">
               Buy Now
               <ArrowRight className="w-4 h-4" />
             </button>
@@ -90,7 +92,7 @@ export default function ProductDetailsPage() {
 
           {/* Description */}
           <div className="pt-6 border-t border-gray-700 text-gray-400 text-sm leading-relaxed">
-            {product.description}
+            {product.details}
           </div>
         </div>
       </div>
