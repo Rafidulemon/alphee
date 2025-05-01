@@ -37,7 +37,7 @@ const categories = [
   { name: "Polo", slug: "polo", imageUrl: "/images/categories/polo.jpg" },
   {
     name: "T-shirt",
-    slug: "t-shirt",
+    slug: "tshirts",
     imageUrl: "/images/categories/tshirt.jpg",
   },
   { name: "Belt", slug: "belt", imageUrl: "/images/categories/belt.jpg" },

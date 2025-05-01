@@ -4,7 +4,7 @@ export const navItems: NavItem[] = [
     {
         label: "Categories", icon: "tag", dropdown: [
             "Accessories", "Watch", "Shirt", "Pant", "Punjabi",
-            "Polo", "T-shirt", "Blazer", "Waistcoat", "Shoe",
+            "Polo", "Tshirts", "Blazer", "Waistcoat", "Shoe",
             "Jacket", "High Neck", "Hoodie"
         ],
         href: ""
