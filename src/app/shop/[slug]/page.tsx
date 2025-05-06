@@ -1,15 +1,19 @@
-import { notFound } from "next/navigation";
+"use client";
+
+import { useParams } from "next/navigation";
 import productsData from "@/app/data/products.json";
 import ProductCard from "@/app/components/product/ProductCard";
+import { notFound } from "next/navigation";
 
-interface Params {
-  params: {
-    slug: string;
-  };
-}
+export default function CategoryPage() {
+  const params = useParams();
+  const slug = params?.slug;
 
-export default async function CategoryPage({ params }: Params) {
-  const category = params.slug.toLowerCase();
+  if (typeof slug !== "string") {
+    notFound();
+  }
+
+  const category = slug.toLowerCase();
 
   const categoryProducts = productsData.filter(
     (product) => product.category.toLowerCase() === category

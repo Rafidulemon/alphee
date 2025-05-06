@@ -35,6 +35,8 @@ export default function ProductCard({
               src={imageUrl}
               alt={name}
               fill
+              placeholder="blur"
+              blurDataURL="/images/landscape-placeholder.svg"
               className="object-cover group-hover:scale-105 transition-transform duration-300"
             />
 
