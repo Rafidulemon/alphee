@@ -3,7 +3,7 @@ import React from 'react'
 
 const Topbar = () => {
   return (
-    <div className="bg-primary text-white text-sm py-2">
+    <div className="bg-primary text-white text-[12px] md:text-[14px] py-2">
         <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
           <div className="flex space-x-4">
             <a href="tel:+8801973547022">+880 1973-547022</a>

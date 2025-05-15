@@ -54,7 +54,7 @@ export default function DesktopNav({ navItems }: { navItems: NavItem[] }) {
                     {item.dropdown.map((subItem: string) => (
                       <Link
                         key={subItem}
-                        href={`/shop/${subItem.toLowerCase()}`}
+                        href={`/shop?category=${encodeURIComponent(subItem.toLowerCase())}`}
                         className="hover:text-primary"
                         onClick={() => setOpenDropdown(null)}
                       >

@@ -13,7 +13,7 @@ interface CategoryCardProps {
 export default function CategoryCard({ name, slug, imageUrl }: CategoryCardProps) {
   return (
     <Link
-      href={`/shop/${slug}`}
+      href={`/shop?category=${encodeURIComponent(slug)}`}
       className="w-[150px] md:w-[200px] group block rounded-2xl overflow-hidden shadow hover:shadow-lg transition-all duration-300 bg-[#111111]"
     >
       {/* Image */}

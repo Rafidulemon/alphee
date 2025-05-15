@@ -83,7 +83,7 @@ export default function MobileNav({
                   {item.dropdown.map((subItem) => (
                     <Link
                       key={subItem}
-                      href={`/shop/${subItem.toLowerCase()}`}
+                      href={`/shop?category=${encodeURIComponent(subItem.toLowerCase())}`}
                       className="hover:text-primary"
                     >
                       {subItem}

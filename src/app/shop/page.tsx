@@ -1,22 +1,57 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import ProductCard from "../components/product/ProductCard";
 import productsData from "../data/products.json";
 
-const products = [...productsData].sort(
-  (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-);
+const rawProducts = [...productsData];
 
-const categories = ["All", ...new Set(products.map((p) => p.category))];
+const categories = ["All", ...new Set(rawProducts.map((p) => p.category))];
+const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
+
+type SortOption = "default" | "priceLowHigh" | "priceHighLow" | "nameAZ";
 
 const ShopPage = () => {
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const searchParams = useSearchParams();
+  const categoryFromQuery = searchParams.get("category");
 
-  const filteredProducts =
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [sortOption, setSortOption] = useState<SortOption>("default");
+  const [inStockOnly, setInStockOnly] = useState(false);
+
+  useEffect(() => {
+    if (categoryFromQuery && categories.includes(categoryFromQuery)) {
+      setSelectedCategory(categoryFromQuery);
+    }
+  }, [categoryFromQuery]);
+
+  // Filter by category
+  let filteredProducts =
     selectedCategory === "All"
-      ? products
-      : products.filter((product) => product.category === selectedCategory);
+      ? rawProducts
+      : rawProducts.filter((product) => product.category === selectedCategory);
+
+  // Filter by stock
+  if (inStockOnly) {
+    filteredProducts = filteredProducts.filter((product) => product.isSoldOut === false);
+  }
+
+  // Sort
+  switch (sortOption) {
+    case "priceLowHigh":
+      filteredProducts.sort((a, b) => (a.discountedPrice || a.regularPrice) - (b.discountedPrice || b.regularPrice));
+      break;
+    case "priceHighLow":
+      filteredProducts.sort((a, b) => (b.discountedPrice || b.regularPrice) - (a.discountedPrice || a.regularPrice));
+      break;
+    case "nameAZ":
+      filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+      break;
+    default:
+      filteredProducts.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+      break;
+  }
 
   return (
     <div className="flex w-full mx-auto p-6">
@@ -33,14 +68,43 @@ const ShopPage = () => {
                 id={category}
                 checked={selectedCategory === category}
                 onChange={() => setSelectedCategory(category)}
-                className="text-primary"
+                className="cursor-pointer text-primary"
               />
               <label htmlFor={category} className="cursor-pointer text-sm">
-                {category}
+                {capitalize(category)}
               </label>
             </li>
           ))}
         </ul>
+
+        {/* Stock Filter */}
+        <div className="mt-6">
+          <input
+            type="checkbox"
+            id="inStock"
+            checked={inStockOnly}
+            onChange={() => setInStockOnly(!inStockOnly)}
+            className="mr-2"
+          />
+          <label htmlFor="inStock" className="text-sm">
+            In Stock Only
+          </label>
+        </div>
+
+        {/* Sort Options */}
+        <div className="mt-6">
+          <label className="block mb-2 text-sm font-semibold">Sort By</label>
+          <select
+            value={sortOption}
+            onChange={(e) => setSortOption(e.target.value as SortOption)}
+            className="w-full p-2 bg-[#1e1e1e] text-white border border-gray-600 rounded-md text-sm"
+          >
+            <option value="default">Newest</option>
+            <option value="priceLowHigh">Price: Low to High</option>
+            <option value="priceHighLow">Price: High to Low</option>
+            <option value="nameAZ">Name: A to Z</option>
+          </select>
+        </div>
       </div>
 
       {/* Product Grid */}
