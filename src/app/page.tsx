@@ -21,30 +21,25 @@ const flash_sale = productsData
   .slice(0, 4);
 
 const categories = [
-  {
-    name: "Accessories",
-    slug: "accessories",
-    imageUrl: "/images/categories/accesories.jpg",
-  },
-  { name: "Watch", slug: "watch", imageUrl: "/images/categories/watch.jpg" },
-  { name: "Shirt", slug: "shirt", imageUrl: "/images/categories/shirt.jpg" },
-  { name: "Pant", slug: "pant", imageUrl: "/images/categories/pant.jpg" },
+  { name: "Watch", slug: "watch", imageUrl: "/images/categories/watch.png" },
+  { name: "Shirt", slug: "shirt", imageUrl: "/images/categories/shirt.png" },
+  { name: "Pant", slug: "pant", imageUrl: "/images/categories/pant.png" },
   {
     name: "Punjabi",
     slug: "punjabi",
-    imageUrl: "/images/categories/punjabi.jpg",
+    imageUrl: "/images/categories/punjabi.png",
   },
-  { name: "Polo", slug: "polo", imageUrl: "/images/categories/polo.jpg" },
+  { name: "Polo", slug: "polo", imageUrl: "/images/categories/polo.png" },
   {
     name: "T-shirt",
     slug: "tshirts",
-    imageUrl: "/images/categories/tshirt.jpg",
+    imageUrl: "/images/categories/tshirt.png",
   },
-  { name: "Belt", slug: "belt", imageUrl: "/images/categories/belt.jpg" },
+  { name: "Belt", slug: "belt", imageUrl: "/images/categories/belt.png" },
   {
     name: "Wallet",
     slug: "wallet",
-    imageUrl: "/images/categories/wallet.jpeg",
+    imageUrl: "/images/categories/wallet.png",
   },
 ];
 
@@ -84,7 +79,7 @@ export default function Home() {
       <span className="text-2xl font-bold text-[#d3b47f] text-center">
         CATEGORIES
       </span>
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {categories.map((category, index) => (
           <CategoryCard key={index} {...category} />
         ))}
