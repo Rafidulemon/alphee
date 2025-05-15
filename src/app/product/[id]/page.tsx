@@ -25,7 +25,7 @@ export default function ProductDetailsPage() {
   }
 
   const handleBuyNow = () => {
-    router.push(`/checkout?id=${product.id}`);
+    router.push(`/buy-now/${product.id}`);
   };
 
   const images: string[] = [
@@ -138,7 +138,7 @@ export default function ProductDetailsPage() {
             </button>
             <button
               onClick={handleBuyNow}
-              className="flex-1 text-sm font-medium bg-primary text-white hover:bg-[#c2a265] transition rounded px-3 py-2 flex items-center justify-center gap-1"
+              className="cursor-pointer flex-1 text-sm font-medium bg-primary text-white hover:bg-[#c2a265] transition rounded px-3 py-2 flex items-center justify-center gap-1"
             >
               Buy Now
               <ArrowRight className="w-4 h-4" />

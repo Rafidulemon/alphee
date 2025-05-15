@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ShoppingCart, ArrowRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface ProductCardProps {
   id: string;
@@ -24,6 +25,7 @@ export default function ProductCard({
   const discountPercentage = discountedPrice
     ? Math.round(((regularPrice - discountedPrice) / regularPrice) * 100)
     : null;
+  const router = useRouter();
 
   return (
     <div className="w-[150px] h-[350px] md:w-[300px] md:h-[450px] group block rounded-2xl overflow-hidden shadow hover:shadow-lg transition-all duration-300 bg-[#131313] flex flex-col justify-between">
@@ -89,7 +91,10 @@ export default function ProductCard({
           <ShoppingCart className="w-4 h-4" />
           <span>Add to Cart</span>
         </button>
-        <button className="cursor-pointer flex-1 text-sm font-medium bg-primary text-white hover:bg-[#c2a265] transition rounded px-3 py-1 flex items-center justify-center space-x-1">
+        <button
+          className="cursor-pointer flex-1 text-sm font-medium bg-primary text-white hover:bg-[#c2a265] transition rounded px-3 py-1 flex items-center justify-center space-x-1"
+          onClick={() => router.push(`/buy-now/${id}`)}
+        >
           <span>Buy Now</span>
           <ArrowRight className="w-4 h-4" />
         </button>
