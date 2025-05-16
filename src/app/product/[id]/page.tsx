@@ -11,9 +11,6 @@ export default function ProductDetailsPage() {
   const { id } = useParams();
   const router = useRouter();
   const product = products.find((p) => p.id === id);
-
-  const [quantity, setQuantity] = useState(1);
-  const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [mainImage, setMainImage] = useState<string | null>(
     product?.imageUrl || null
   );
@@ -99,52 +96,20 @@ export default function ProductDetailsPage() {
           {/* Size Selector */}
           {product.size && (
             <div className="flex flex-col gap-2">
-              <label className="text-sm">Select Size:</label>
+              <label className="text-sm">Available Sizes:</label>
               <div className="flex gap-2 flex-wrap">
                 {product.size.map((sz) => (
-                  <button
+                  <p
                     key={sz}
-                    onClick={() => setSelectedSize(sz)}
-                    className={`px-3 py-1 rounded border ${
-                      selectedSize === sz
-                        ? "border-primary bg-primary text-white"
-                        : "border-gray-500 text-gray-300"
-                    }`}
+                    className={`px-3 py-1 rounded border border-gray-500 text-sm`}
                   >
                     {sz}
-                  </button>
+                  </p>
                 ))}
               </div>
             </div>
           )}
-
-          {/* Quantity Selector */}
-          <div className="flex items-center gap-3">
-            <label className="text-sm">Quantity:</label>
-            <input
-              type="number"
-              value={quantity}
-              onChange={(e) => setQuantity(Number(e.target.value))}
-              min={1}
-              className="w-16 text-center bg-transparent border border-gray-500 rounded py-1 px-2"
-            />
-          </div>
-
-          {/* Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3">
-            <button className="flex-1 text-sm text-primary font-medium border border-gray-300 hover:border-primary hover:bg-primary hover:text-white transition rounded px-3 py-2 flex items-center justify-center gap-1">
-              <ShoppingCart className="w-4 h-4" />
-              Add to Cart
-            </button>
-            <button
-              onClick={handleBuyNow}
-              className="cursor-pointer flex-1 text-sm font-medium bg-primary text-white hover:bg-[#c2a265] transition rounded px-3 py-2 flex items-center justify-center gap-1"
-            >
-              Buy Now
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
-
+          
           {/* Description */}
           <div className="pt-4 border-t border-gray-700 text-gray-400 text-sm leading-relaxed">
             <p className="mb-2">{product.details}</p>
@@ -165,6 +130,20 @@ export default function ProductDetailsPage() {
                 </li>
               )}
             </ul>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-3">
+            <button className="flex-1 text-sm text-primary font-medium border border-gray-300 hover:border-primary hover:bg-primary hover:text-white transition rounded px-3 py-2 flex items-center justify-center gap-1">
+              <ShoppingCart className="w-4 h-4" />
+              Add to Cart
+            </button>
+            <button
+              onClick={handleBuyNow}
+              className="cursor-pointer flex-1 text-sm font-medium bg-primary text-white hover:bg-[#c2a265] transition rounded px-3 py-2 flex items-center justify-center gap-1"
+            >
+              Buy Now
+              <ArrowRight className="w-4 h-4" />
+            </button>
           </div>
         </div>
       </div>

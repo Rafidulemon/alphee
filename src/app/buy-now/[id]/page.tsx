@@ -32,23 +32,80 @@ export default function BuyNowPage() {
     if (found) setProduct(found as Product);
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault();
 
-    if (!selectedSize) {
-      alert("Please select a size.");
-      return;
-    }
+  //   if (!selectedSize) {
+  //     alert("Please select a size.");
+  //     return;
+  //   }
 
-    // Show modal
+  //   // Show modal
+  //   setShowModal(true);
+
+  //   // Redirect after 3 seconds
+  //   setTimeout(() => {
+  //     setShowModal(false);
+  //     router.push("/");
+  //   }, 3000);
+  // };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  if (!selectedSize) {
+    alert("Please select a size.");
+    return;
+  }
+
+  const form = e.target as HTMLFormElement;
+  const formData = new FormData(form);
+
+  const customerName = formData.get("name") as string;
+  const phone = formData.get("phone") as string;
+  const email = formData.get("email") as string;
+  const address = formData.get("address") as string;
+
+  const deliveryCharge = location === "inside" ? 50 : 100;
+  const totalPrice = (product!.discountedPrice || product!.regularPrice) * quantity + deliveryCharge;
+
+  const orderDetails = {
+    productId: product!.id,
+    productName: product!.name,
+    price: product!.discountedPrice || product!.regularPrice,
+    quantity,
+    size: selectedSize,
+    customerName,
+    phone,
+    email,
+    address,
+    location,
+    district,
+    policeStation,
+    deliveryCharge,
+    totalPrice,
+  };
+
+  try {
+    const res = await fetch("/api/order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(orderDetails),
+    });
+
+    if (!res.ok) throw new Error("Order submission failed");
+
     setShowModal(true);
-
-    // Redirect after 3 seconds
     setTimeout(() => {
       setShowModal(false);
       router.push("/");
     }, 3000);
-  };
+  } catch (error) {
+    console.error("Order error:", error);
+    alert("Something went wrong. Please try again.");
+  }
+};
+
 
   if (!product) {
     return <div className="text-center py-10 text-lg text-gray-400">Loading product...</div>;
@@ -88,6 +145,8 @@ export default function BuyNowPage() {
             <label className="text-sm">Product ID</label>
             <input
               value={product.id}
+              name="productId"
+              required
               readOnly
               className="w-full p-2 rounded bg-[#222] border border-gray-600 text-sm"
             />
@@ -97,6 +156,8 @@ export default function BuyNowPage() {
             <label className="text-sm">Size</label>
             <select
               value={selectedSize}
+              name="size"
+              required
               onChange={(e) => setSelectedSize(e.target.value)}
               className="w-full p-2 rounded bg-[#222] border border-gray-600 text-sm"
             >
@@ -113,6 +174,8 @@ export default function BuyNowPage() {
             <label className="text-sm">Quantity</label>
             <input
               type="number"
+              name="quantity"
+              required
               value={quantity}
               onChange={(e) => setQuantity(parseInt(e.target.value))}
               min={1}
@@ -124,6 +187,7 @@ export default function BuyNowPage() {
             <label className="text-sm">Name</label>
             <input
               required
+              name="name" 
               className="w-full p-2 rounded bg-[#222] border border-gray-600 text-sm"
               placeholder="Your name"
             />
@@ -133,6 +197,7 @@ export default function BuyNowPage() {
             <label className="text-sm">Contact Number</label>
             <input
               required
+              name="phone"
               className="w-full p-2 rounded bg-[#222] border border-gray-600 text-sm"
               placeholder="Phone number"
             />
@@ -142,6 +207,7 @@ export default function BuyNowPage() {
             <label className="text-sm">Email (optional)</label>
             <input
               type="email"
+              name="email"
               className="w-full p-2 rounded bg-[#222] border border-gray-600 text-sm"
               placeholder="Email"
             />
@@ -150,6 +216,8 @@ export default function BuyNowPage() {
           <div>
             <label className="text-sm">Address</label>
             <textarea
+              required
+              name="address"
               className="w-full p-2 rounded bg-[#222] border border-gray-600 text-sm"
               placeholder="Your address"
             ></textarea>
@@ -160,6 +228,7 @@ export default function BuyNowPage() {
             <div className="flex gap-4 mt-1">
               <label className="flex items-center gap-2 text-sm">
                 <input
+                  name="location"
                   type="radio"
                   value="inside"
                   checked={location === "inside"}
@@ -169,6 +238,7 @@ export default function BuyNowPage() {
               </label>
               <label className="flex items-center gap-2 text-sm">
                 <input
+                  name="location"
                   type="radio"
                   value="outside"
                   checked={location === "outside"}
@@ -184,6 +254,7 @@ export default function BuyNowPage() {
               <label className="text-sm">Police Station</label>
               <input
                 type="text"
+                name="policeStation"
                 className="w-full p-2 rounded bg-[#222] border border-gray-600 text-sm"
                 placeholder="Ex: Kotwali"
                 value={policeStation}
@@ -195,6 +266,7 @@ export default function BuyNowPage() {
               <div>
                 <label className="text-sm">District</label>
                 <input
+                  name="district"
                   type="text"
                   className="w-full p-2 rounded bg-[#222] border border-gray-600 text-sm"
                   placeholder="Ex: Dhaka"
@@ -205,6 +277,7 @@ export default function BuyNowPage() {
               <div>
                 <label className="text-sm">Police Station</label>
                 <input
+                  name="policeStation"
                   type="text"
                   className="w-full p-2 rounded bg-[#222] border border-gray-600 text-sm"
                   placeholder="Ex: Gulshan"
