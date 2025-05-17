@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import products from "@/app/data/products.json";
+import policestationDataRaw from "@/app/data/policestation.json";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -15,6 +16,12 @@ interface Product {
   details: string;
 }
 
+interface PoliceStationData {
+  [division: string]: {
+    [district: string]: string[];
+  };
+}
+
 export default function BuyNowPage() {
   const [product, setProduct] = useState<Product | null>(null);
   const [selectedSize, setSelectedSize] = useState("");
@@ -24,6 +31,28 @@ export default function BuyNowPage() {
   const [policeStation, setPoliceStation] = useState("");
   const router = useRouter();
   const [showModal, setShowModal] = useState(false);
+  const policestationData: PoliceStationData = policestationDataRaw;
+
+  const districts = Object.keys(policestationData);
+ const policeStationsForInside = [
+  "Bakalia",
+  "Bayazid Bostami",
+  "Chandgaon",
+  "Chawkbazar",
+  "Double Mooring",
+  "Halishahar",
+  "Khulshi",
+  "Kotwali",
+  "Pahartali",
+  "Panchlaish",
+  "Patenga",
+  "EPZ"
+];
+  const policeStationsForDistrict = district
+  ? Object.values(policestationData[district] || {}).flat()
+  : [];
+
+  console.log(policeStationsForDistrict);
 
   useEffect(() => {
     const url = new URL(window.location.href);
@@ -32,80 +61,79 @@ export default function BuyNowPage() {
     if (found) setProduct(found as Product);
   }, []);
 
-  // const handleSubmit = (e: React.FormEvent) => {
-  //   e.preventDefault();
+  // Reset police station & district on location change
+  useEffect(() => {
+    setPoliceStation("");
+    if (location === "inside") {
+      setDistrict(""); // no district needed if inside
+    }
+  }, [location]);
 
-  //   if (!selectedSize) {
-  //     alert("Please select a size.");
-  //     return;
-  //   }
-
-  //   // Show modal
-  //   setShowModal(true);
-
-  //   // Redirect after 3 seconds
-  //   setTimeout(() => {
-  //     setShowModal(false);
-  //     router.push("/");
-  //   }, 3000);
-  // };
+  // Reset police station when district changes (outside)
+  useEffect(() => {
+    setPoliceStation("");
+  }, [district]);
 
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  if (!selectedSize) {
-    alert("Please select a size.");
-    return;
-  }
+    if (!selectedSize) {
+      alert("Please select a size.");
+      return;
+    }
 
-  const form = e.target as HTMLFormElement;
-  const formData = new FormData(form);
+    if (!policeStation) {
+      alert("Please select a police station.");
+      return;
+    }
 
-  const customerName = formData.get("name") as string;
-  const phone = formData.get("phone") as string;
-  const email = formData.get("email") as string;
-  const address = formData.get("address") as string;
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
 
-  const deliveryCharge = location === "inside" ? 50 : 100;
-  const totalPrice = (product!.discountedPrice || product!.regularPrice) * quantity + deliveryCharge;
+    const customerName = formData.get("name") as string;
+    const phone = formData.get("phone") as string;
+    const email = formData.get("email") as string;
+    const address = formData.get("address") as string;
 
-  const orderDetails = {
-    productId: product!.id,
-    productName: product!.name,
-    price: product!.discountedPrice || product!.regularPrice,
-    quantity,
-    size: selectedSize,
-    customerName,
-    phone,
-    email,
-    address,
-    location,
-    district,
-    policeStation,
-    deliveryCharge,
-    totalPrice,
+    const deliveryCharge = location === "inside" ? 50 : 100;
+    const totalPrice = (product!.discountedPrice || product!.regularPrice) * quantity + deliveryCharge;
+
+    const orderDetails = {
+      productId: product!.id,
+      productName: product!.name,
+      price: product!.discountedPrice || product!.regularPrice,
+      quantity,
+      size: selectedSize,
+      customerName,
+      phone,
+      email,
+      address,
+      location,
+      district,
+      policeStation,
+      deliveryCharge,
+      totalPrice,
+    };
+
+    try {
+      const res = await fetch("/api/order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orderDetails),
+      });
+
+      if (!res.ok) throw new Error("Order submission failed");
+
+      setShowModal(true);
+      setTimeout(() => {
+        setShowModal(false);
+        router.push("/");
+      }, 3000);
+    } catch (error) {
+      console.error("Order error:", error);
+      alert("Something went wrong. Please try again.");
+    }
   };
-
-  try {
-    const res = await fetch("/api/order", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(orderDetails),
-    });
-
-    if (!res.ok) throw new Error("Order submission failed");
-
-    setShowModal(true);
-    setTimeout(() => {
-      setShowModal(false);
-      router.push("/");
-    }, 3000);
-  } catch (error) {
-    console.error("Order error:", error);
-    alert("Something went wrong. Please try again.");
-  }
-};
-
 
   if (!product) {
     return <div className="text-center py-10 text-lg text-gray-400">Loading product...</div>;
@@ -187,7 +215,7 @@ export default function BuyNowPage() {
             <label className="text-sm">Name</label>
             <input
               required
-              name="name" 
+              name="name"
               className="w-full p-2 rounded bg-[#222] border border-gray-600 text-sm"
               placeholder="Your name"
             />
@@ -252,38 +280,58 @@ export default function BuyNowPage() {
           {location === "inside" ? (
             <div>
               <label className="text-sm">Police Station</label>
-              <input
-                type="text"
+              <select
+                required
                 name="policeStation"
-                className="w-full p-2 rounded bg-[#222] border border-gray-600 text-sm"
-                placeholder="Ex: Kotwali"
                 value={policeStation}
                 onChange={(e) => setPoliceStation(e.target.value)}
-              />
+                className="w-full p-2 rounded bg-[#222] border border-gray-600 text-sm"
+              >
+                <option value="">Select Police Station</option>
+                {policeStationsForInside.map((ps:string) => (
+                  <option key={ps} value={ps}>
+                    {ps}
+                  </option>
+                ))}
+              </select>
             </div>
           ) : (
             <>
               <div>
                 <label className="text-sm">District</label>
-                <input
+                <select
+                  required
                   name="district"
-                  type="text"
-                  className="w-full p-2 rounded bg-[#222] border border-gray-600 text-sm"
-                  placeholder="Ex: Dhaka"
                   value={district}
                   onChange={(e) => setDistrict(e.target.value)}
-                />
+                  className="w-full p-2 rounded bg-[#222] border border-gray-600 text-sm"
+                >
+                  <option value="">Select District</option>
+                  {districts.map((d) => (
+                    <option key={d} value={d}>
+                      {d}
+                    </option>
+                  ))}
+                </select>
               </div>
+
               <div>
                 <label className="text-sm">Police Station</label>
-                <input
+                <select
+                  required
                   name="policeStation"
-                  type="text"
-                  className="w-full p-2 rounded bg-[#222] border border-gray-600 text-sm"
-                  placeholder="Ex: Gulshan"
                   value={policeStation}
                   onChange={(e) => setPoliceStation(e.target.value)}
-                />
+                  disabled={!district}
+                  className="w-full p-2 rounded bg-[#222] border border-gray-600 text-sm disabled:opacity-50"
+                >
+                  <option value="">Select Police Station</option>
+                  {policeStationsForDistrict.map((ps: string) => (
+                    <option key={ps} value={ps}>
+                      {ps}
+                    </option>
+                  ))}
+                </select>
               </div>
             </>
           )}

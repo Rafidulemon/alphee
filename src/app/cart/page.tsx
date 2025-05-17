@@ -2,42 +2,14 @@
 
 import Image from "next/image";
 import { X, ArrowRight } from "lucide-react";
-import { useState } from "react";
-import Link from "next/link";
 
-const initialCartItems = [
-  {
-    id: "1",
-    name: "Alphée Oversized Tee",
-    imageUrl: "/images/products/shirts/cuban_half/7.jpg",
-    regularPrice: 1200,
-    discountedPrice: 950,
-    quantity: 1,
-  },
-  {
-    id: "2",
-    name: "Textured Polo Shirt",
-    imageUrl: "/images/products/shirts/cuban_half/4.jpg",
-    regularPrice: 1500,
-    discountedPrice: 990,
-    quantity: 2,
-  },
-];
+import Link from "next/link";
+import { useCartStore } from "../store/cartStore";
 
 export default function CartPage() {
-  const [cartItems, setCartItems] = useState(initialCartItems);
-
-  const updateQuantity = (id: string, quantity: number) => {
-    setCartItems((items) =>
-      items.map((item) =>
-        item.id === id ? { ...item, quantity: Math.max(1, quantity) } : item
-      )
-    );
-  };
-
-  const removeItem = (id: string) => {
-    setCartItems((items) => items.filter((item) => item.id !== id));
-  };
+  const cartItems = useCartStore((state) => state.items);
+  const updateQuantity = useCartStore((state) => state.updateQuantity);
+  const removeItem = useCartStore((state) => state.removeItem);
 
   const subtotal = cartItems.reduce(
     (total, item) => total + item.discountedPrice * item.quantity,

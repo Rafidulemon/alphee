@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ShoppingCart, ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useCartStore } from "@/app/store/cartStore";
 
 interface ProductCardProps {
   id: string;
@@ -87,7 +88,18 @@ export default function ProductCard({
 
       {/* Buttons */}
       <div className="mt-3 flex flex-col gap-2 px-4 pb-4">
-        <button className="cursor-pointer flex-1 text-sm text-primary font-medium border border-gray-300 hover:border-primary hover:bg-primary hover:text-white transition rounded px-3 py-1 flex items-center justify-center space-x-1">
+        <button
+          className="cursor-pointer flex-1 text-sm text-primary font-medium border border-gray-300 hover:border-primary hover:bg-primary hover:text-white transition rounded px-3 py-1 flex items-center justify-center space-x-1"
+          onClick={() =>
+            useCartStore.getState().addItem({
+              id,
+              name,
+              imageUrl,
+              regularPrice,
+              discountedPrice: discountedPrice || regularPrice,
+            })
+          }
+        >
           <ShoppingCart className="w-4 h-4" />
           <span>Add to Cart</span>
         </button>

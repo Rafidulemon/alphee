@@ -8,10 +8,12 @@ import Topbar from "./Topbar";
 import { navItems } from "@/app/constants/navItems";
 import DesktopNav from "./DesktopNav";
 import MobileNav from "./MobileNav";
+import { useCartStore } from "@/app/store/cartStore";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
+  const cartCount = useCartStore((state) => state.getTotalItems());
 
   return (
     <header className="bg-[#111111] shadow-md border-b border-gray-200">
@@ -90,7 +92,7 @@ export default function Header() {
           >
             <ShoppingCart className="w-5 h-5" />
             <span className="absolute -top-2 -right-2 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-bold leading-none text-white bg-red-600 rounded-full">
-              0
+              {cartCount}
             </span>
           </Link>
         </div>
