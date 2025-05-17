@@ -21,11 +21,10 @@ export default function Footer() {
                 className="mb-4"
               />
             </Link>
-            <p className="text-gray-200 text-md">Fusion of Class & Style.</p>
             <div>
               <p className="text-gray-400 text-sm mt-2">
-                Tanisha Bhaban, Munsef Bazar<br />
-                Ward No: 04, Patiya<br />
+                Tanisha Bhaban, Opposite of Patiya High School<br />
+                Patiya Pouroshova<br />
                 Chittagong-4370
               </p>
               <p className="text-gray-400 text-sm mt-2">
