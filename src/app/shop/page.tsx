@@ -9,7 +9,7 @@ const ShopPageContent = dynamic(() => import("../components/ShopPageContent"), {
 
 export default function ShopPageWrapper() {
   return (
-    <Suspense fallback={<div className="text-center p-10 text-gray-400">Loading...</div>}>
+    <Suspense fallback={<div className="text-center md:p-10 text-gray-400">Loading...</div>}>
       <ShopPageContent />
     </Suspense>
   );

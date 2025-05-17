@@ -55,7 +55,7 @@ export default function Home() {
     products: typeof new_arrivals;
     url: string;
   }) => (
-    <div className="p-10 flex flex-col gap-6 w-full justify-center items-center">
+    <div className="p-4 md:p-10 flex flex-col gap-6 w-full justify-center items-center">
       <span className="text-2xl font-bold text-[#d3b47f] text-center">
         {title}
       </span>
@@ -75,7 +75,7 @@ export default function Home() {
   );
 
   const CategorySection = () => (
-    <div className="p-10 flex flex-col gap-6 w-full justify-center items-center">
+    <div className="p-4 md:p-10 flex flex-col gap-6 w-full justify-center items-center">
       <span className="text-2xl font-bold text-[#d3b47f] text-center">
         CATEGORIES
       </span>

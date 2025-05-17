@@ -54,7 +54,7 @@ const ShopPage = () => {
   }
 
   return (
-    <div className="flex w-full mx-auto p-6">
+    <div className="flex w-full mx-auto p-4 md:p-6">
       {/* Sidebar */}
       <div className="md:block hidden w-1/4 bg-[#131313] text-white rounded-xl p-6 mr-6">
         <h2 className="text-lg font-semibold">Categories</h2>
