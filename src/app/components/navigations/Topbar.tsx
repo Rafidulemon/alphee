@@ -1,4 +1,4 @@
-import { Facebook, Instagram, Twitter } from 'lucide-react'
+import { Facebook, Instagram } from 'lucide-react'
 import React from 'react'
 
 const Topbar = () => {
@@ -11,7 +11,7 @@ const Topbar = () => {
           </div>
           <div className="flex space-x-3">
             <a
-              href="https://facebook.com"
+              href="https://www.facebook.com/profile.php?id=61572945527439"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-gray-700"
@@ -19,20 +19,12 @@ const Topbar = () => {
               <Facebook className="w-5 h-5" />
             </a>
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/alphee.bd/"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-gray-700"
             >
               <Instagram className="w-5 h-5" />
-            </a>
-            <a
-              href="https://twitter.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-gray-700"
-            >
-              <Twitter className="w-5 h-5" />
             </a>
           </div>
         </div>

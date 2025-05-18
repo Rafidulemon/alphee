@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
+import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 
 export default function Footer() {
   return (
@@ -23,13 +23,25 @@ export default function Footer() {
             </Link>
             <div>
               <p className="text-gray-400 text-sm mt-2">
-                Tanisha Bhaban, Opposite of Patiya High School<br />
-                Patiya Pouroshova<br />
+                Hajee Amju Miah Tower (4th Floor), Holding No. 584
+                <br />
+                Arakan Road, Ward No: 07, Patiya
+                <br />
                 Chittagong-4370
               </p>
               <p className="text-gray-400 text-sm mt-2">
-                Email: <a href="mailto:alphee.bd@gmail.com" className="hover:underline">alphee.bd@gmail.com</a><br />
-                Phone: <a href="tel:+8801973547022" className="hover:underline">+880 1973-547022</a>
+                Email:{" "}
+                <a
+                  href="mailto:alphee.bd@gmail.com"
+                  className="hover:underline"
+                >
+                  alphee.bd@gmail.com
+                </a>
+                <br />
+                Phone:{" "}
+                <a href="tel:+8801973547022" className="hover:underline">
+                  +880 1973-547022
+                </a>
               </p>
             </div>
           </div>
@@ -38,23 +50,89 @@ export default function Footer() {
           <div>
             <h3 className="text-white font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2 text-gray-400 text-sm">
-              <li><Link href="/">Home</Link></li>
-              <li><Link href="/shop">Shop</Link></li>
-              <li><Link href="/best-selling">Best Selling</Link></li>
-              <li><Link href="/flash-sale">Flash Sale</Link></li>
+              <li>
+                <Link href="/">Home</Link>
+              </li>
+              <li>
+                <Link href="/shop">Shop</Link>
+              </li>
+              <li>
+                <Link href="/best-selling">Best Selling</Link>
+              </li>
+              <li>
+                <Link href="/flash-sale">Flash Sale</Link>
+              </li>
             </ul>
+
+            <div className="flex-1 md:hidden">
+              <h3 className="text-white font-semibold mt-4 md:mt-6">
+                Follow Us On:
+              </h3>
+              <div className="flex flex-row space-x-4 mt-2">
+                <FaFacebook
+                  className="w-5 h-5 text-[#1877F2] hover:text-white cursor-pointer"
+                  href="https://www.facebook.com/profile.php?id=61572945527439"
+                  target="_blank"
+                  aria-label="Facebook"
+                />
+                <FaInstagram
+                  className="w-5 h-5 text-[#DD2A7B] hover:text-white cursor-pointer"
+                  href="https://www.instagram.com/alphee.bd/"
+                  target="_blank"
+                  aria-label="Instagram"
+                />
+
+                <FaTwitter className="w-5 h-5 text-[#1DA1F2] hover:text-white cursor-pointer" />
+
+                <FaLinkedin className="w-5 h-5 text-[#0077B5] hover:text-white cursor-pointer" />
+              </div>
+            </div>
           </div>
 
           {/* Customer Service */}
           <div>
             <h3 className="text-white font-semibold mb-4">Customer Service</h3>
             <ul className="space-y-2 text-gray-400 text-sm">
-              <li><Link href="/refund-policy">Refund Policy</Link></li>
-              <li><Link href="/privacy-policy">Privacy Policy</Link></li>
-              <li><Link href="/about-us">About Us</Link></li>
-              <li><Link href="/contact-us">Contact Us</Link></li>
-              <li><Link href="/sitemap">Sitemap</Link></li>
+              <li>
+                <Link href="/refund-policy">Refund Policy</Link>
+              </li>
+              <li>
+                <Link href="/privacy-policy">Privacy Policy</Link>
+              </li>
+              <li>
+                <Link href="/about-us">About Us</Link>
+              </li>
+              <li>
+                <Link href="/contact-us">Contact Us</Link>
+              </li>
+              <li>
+                <Link href="/sitemap">Sitemap</Link>
+              </li>
             </ul>
+
+            <div className="hidden md:block">
+              <h3 className="text-white font-semibold mt-4 md:mt-6">
+                Follow Us On:
+              </h3>
+              <div className="flex flex-row space-x-4 mt-2">
+                <FaFacebook
+                  className="w-5 h-5 text-[#1877F2] hover:text-white cursor-pointer"
+                  href="https://www.facebook.com/profile.php?id=61572945527439"
+                  target="_blank"
+                  aria-label="Facebook"
+                />
+                <FaInstagram
+                  className="w-5 h-5 text-[#DD2A7B] hover:text-white cursor-pointer"
+                  href="https://www.instagram.com/alphee.bd/"
+                  target="_blank"
+                  aria-label="Instagram"
+                />
+
+                <FaTwitter className="w-5 h-5 text-[#1DA1F2] hover:text-white cursor-pointer" />
+
+                <FaLinkedin className="w-5 h-5 text-[#0077B5] hover:text-white cursor-pointer" />
+              </div>
+            </div>
           </div>
         </div>
 
@@ -85,20 +163,6 @@ export default function Footer() {
               Md. Rafidul Islam
             </Link>
           </p>
-          <div className="flex space-x-4 mt-4 md:mt-0">
-            <Link href="https://facebook.com" target="_blank" aria-label="Facebook">
-              <Facebook className="w-5 h-5 text-gray-400 hover:text-white" />
-            </Link>
-            <Link href="https://instagram.com" target="_blank" aria-label="Instagram">
-              <Instagram className="w-5 h-5 text-gray-400 hover:text-white" />
-            </Link>
-            <Link href="https://twitter.com" target="_blank" aria-label="Twitter">
-              <Twitter className="w-5 h-5 text-gray-400 hover:text-white" />
-            </Link>
-            <Link href="https://linkedin.com" target="_blank" aria-label="LinkedIn">
-              <Linkedin className="w-5 h-5 text-gray-400 hover:text-white" />
-            </Link>
-          </div>
         </div>
       </div>
     </footer>

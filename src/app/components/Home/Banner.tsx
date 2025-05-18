@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -16,6 +16,13 @@ const images = [
 export default function Banner() {
   const [current, setCurrent] = useState(0);
   const router = useRouter();
+
+  useEffect(() => {
+  const interval = setInterval(() => {
+    nextSlide();
+  }, 5000);
+  return () => clearInterval(interval);
+}, []);
 
   const nextSlide = () => setCurrent((prev) => (prev + 1) % images.length);
   const prevSlide = () =>
@@ -35,7 +42,7 @@ export default function Banner() {
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -50 }}
-              transition={{ duration: 0.01 }}
+              transition={{ duration: 0.5 }}
               className="w-full h-auto"
             >
               <Image
