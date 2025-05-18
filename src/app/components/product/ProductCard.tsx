@@ -13,6 +13,7 @@ interface ProductCardProps {
   regularPrice: number;
   discountedPrice?: number;
   label?: string;
+  availableSizes?: string[];
 }
 
 export default function ProductCard({
@@ -22,6 +23,7 @@ export default function ProductCard({
   regularPrice,
   discountedPrice,
   label,
+  availableSizes,
 }: ProductCardProps) {
   const discountPercentage = discountedPrice
     ? Math.round(((regularPrice - discountedPrice) / regularPrice) * 100)
@@ -97,6 +99,7 @@ export default function ProductCard({
               imageUrl,
               regularPrice,
               discountedPrice: discountedPrice || regularPrice,
+              availableSizes: availableSizes,
             })
           }
         >
@@ -105,7 +108,17 @@ export default function ProductCard({
         </button>
         <button
           className="cursor-pointer flex-1 text-sm font-medium bg-primary text-white hover:bg-[#c2a265] transition rounded px-3 py-1 flex items-center justify-center space-x-1"
-          onClick={() => router.push(`/buy-now/${id}`)}
+          onClick={() => {
+            useCartStore.getState().addItem({
+              id,
+              name,
+              imageUrl,
+              regularPrice,
+              discountedPrice: discountedPrice || regularPrice,
+              availableSizes: availableSizes,
+            });
+            router.push("/cart");
+          }}
         >
           <span>Buy Now</span>
           <ArrowRight className="w-4 h-4" />

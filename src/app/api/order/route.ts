@@ -1,16 +1,19 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
+interface OrderItem {
+  productId: string;
+  productName: string;
+  price: number;
+  quantity: number;
+  size?: string;
+}
+
 export async function POST(request: Request) {
   try {
-    const order = await request.json();
+    const { orderDetails, customerInfo } = await request.json();
 
     const {
-      productId,
-      productName,
-      price,
-      quantity,
-      size,
       customerName,
       phone,
       email,
@@ -20,7 +23,7 @@ export async function POST(request: Request) {
       policeStation,
       deliveryCharge,
       totalPrice,
-    } = order;
+    } = customerInfo;
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -30,20 +33,29 @@ export async function POST(request: Request) {
       },
     });
 
-    const deliveryArea = location === "inside"
-      ? `Police Station: ${policeStation}`
-      : `District: ${district}, Police Station: ${policeStation}`;
+    const orderText = orderDetails
+      .map(
+        (item: OrderItem) => `
+📦 Product: ${item.productName}
+🆔 Product ID: ${item.productId}
+📏 Size: ${item.size}
+🔢 Quantity: ${item.quantity}
+💸 Price per item: ৳${item.price}
+`
+      )
+      .join("\n");
+
+    const deliveryArea =
+      location === "inside"
+        ? `Police Station: ${policeStation}`
+        : `District: ${district}, Police Station: ${policeStation}`;
 
     const mailOptions = {
       from: process.env.NEXT_PUBLIC_EMAIL_USER,
       to: process.env.NEXT_PUBLIC_RECEIVER_EMAIL,
       subject: `🛒 New Order from ${customerName}`,
       text: `
-📦 Product: ${productName}
-🆔 Product ID: ${productId}
-📏 Size: ${size}
-🔢 Quantity: ${quantity}
-💸 Price per item: ৳${price}
+${orderText}
 🚚 Delivery Charge: ৳${deliveryCharge}
 💰 Total: ৳${totalPrice}
 
@@ -51,7 +63,9 @@ export async function POST(request: Request) {
 📞 Phone: ${phone}
 📧 Email: ${email || "N/A"}
 🏠 Address: ${address}
-📍 Location: ${location === "inside" ? "Inside Chittagong" : "Outside Chittagong"}
+📍 Location: ${
+        location === "inside" ? "Inside Chittagong" : "Outside Chittagong"
+      }
 ${deliveryArea}
       `,
     };
@@ -61,6 +75,9 @@ ${deliveryArea}
     return NextResponse.json({ message: "Order email sent" });
   } catch (error) {
     console.error("Email sending failed:", error);
-    return NextResponse.json({ message: "Failed to send order email" }, { status: 500 });
+    return NextResponse.json(
+      { message: "Failed to send order email" },
+      { status: 500 }
+    );
   }
 }

@@ -1,20 +1,23 @@
 "use client";
 
 import Image from "next/image";
-import { X, ArrowRight } from "lucide-react";
-
 import Link from "next/link";
+import { X, ArrowRight } from "lucide-react";
 import { useCartStore } from "../store/cartStore";
 
 export default function CartPage() {
   const cartItems = useCartStore((state) => state.items);
+  console.log(cartItems);
   const updateQuantity = useCartStore((state) => state.updateQuantity);
   const removeItem = useCartStore((state) => state.removeItem);
+  const updateSize = useCartStore((state) => state.updateSize);
 
   const subtotal = cartItems.reduce(
     (total, item) => total + item.discountedPrice * item.quantity,
     0
   );
+
+  const allSizesSelected = cartItems.every((item) => !!item.size);
 
   return (
     <>
@@ -28,7 +31,9 @@ export default function CartPage() {
               height={500}
               className="object-contain"
             />
-            <p className="text-white text-lg md:text-2xl mt-4">Your cart is empty.</p>
+            <p className="text-white text-lg md:text-2xl mt-4">
+              Your cart is empty.
+            </p>
           </div>
         </div>
       ) : (
@@ -36,7 +41,6 @@ export default function CartPage() {
           <div className="max-w-7xl mx-auto">
             <h1 className="text-2xl sm:text-3xl font-bold mb-8">Your Cart</h1>
 
-            {/* Cart Items */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
               {/* Items List */}
               <div className="lg:col-span-2 space-y-6">
@@ -75,6 +79,29 @@ export default function CartPage() {
                           className="w-16 text-center bg-transparent border border-gray-600 rounded py-1 px-2"
                         />
                       </div>
+
+                      {/* Size Selection */}
+                      <div className="flex items-center gap-2 mt-2">
+                        <label className="text-sm text-gray-400">Size:</label>
+                        <select
+                          value={item.size ?? ""}
+                          onChange={(e) => updateSize(item.id, e.target.value)}
+                          className="bg-black border border-gray-600 rounded py-1 px-2 text-sm text-white"
+                        >
+                          <option value="" disabled className="bg-black">
+                            Select size
+                          </option>
+                          {item.availableSizes?.map((size) => (
+                            <option
+                              key={size}
+                              value={size}
+                              className="bg-black"
+                            >
+                              {size}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
                     </div>
                     <button
                       onClick={() => removeItem(item.id)}
@@ -101,8 +128,22 @@ export default function CartPage() {
                   <span>Total</span>
                   <span className="text-primary">৳{subtotal}</span>
                 </div>
-                <Link href={"/checkout"}>
-                  <button className="cursor-pointer w-full flex justify-center items-center gap-2 bg-primary hover:bg-[#c1a160] text-white text-sm py-2 px-4 rounded transition">
+
+                {!allSizesSelected && (
+                  <p className="text-sm text-red-500">
+                    Please select sizes for all items to proceed.
+                  </p>
+                )}
+
+                <Link href={allSizesSelected ? "/checkout" : "#"}>
+                  <button
+                    disabled={!allSizesSelected}
+                    className={`cursor-pointer w-full flex justify-center items-center gap-2 ${
+                      allSizesSelected
+                        ? "bg-primary hover:bg-[#c1a160]"
+                        : "bg-gray-600 cursor-not-allowed"
+                    } text-white text-sm py-2 px-4 rounded transition`}
+                  >
                     Proceed to Checkout
                     <ArrowRight size={18} />
                   </button>

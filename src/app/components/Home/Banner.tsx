@@ -7,10 +7,10 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const images = [
-  "/images/banners/Banner1.png",
   "/images/banners/Banner2.png",
-  "/images/banners/Banner3.png",
   "/images/banners/Banner4.png",
+  "/images/banners/Banner1.png",
+  "/images/banners/Banner3.png",
 ];
 
 export default function Banner() {
@@ -18,7 +18,8 @@ export default function Banner() {
   const router = useRouter();
 
   const nextSlide = () => setCurrent((prev) => (prev + 1) % images.length);
-  const prevSlide = () => setCurrent((prev) => (prev - 1 + images.length) % images.length);
+  const prevSlide = () =>
+    setCurrent((prev) => (prev - 1 + images.length) % images.length);
 
   return (
     <section className="relative overflow-hidden">
@@ -30,11 +31,11 @@ export default function Banner() {
         >
           <AnimatePresence mode="wait">
             <motion.div
-              key={current}
+              key={images[current]}
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -50 }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.01 }}
               className="w-full h-auto"
             >
               <Image

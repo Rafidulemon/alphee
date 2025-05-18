@@ -62,7 +62,7 @@ export default function Home() {
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {products.map((product) => (
-          <ProductCard key={product.id} {...product} label={product.label} />
+          <ProductCard key={product.id} {...product} label={product.label} availableSizes={product.size}/>
         ))}
       </div>
       <button

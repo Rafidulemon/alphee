@@ -7,6 +7,8 @@ interface CartItem {
   regularPrice: number;
   discountedPrice: number;
   quantity: number;
+  availableSizes?: string[];
+  size?: string;
 }
 
 interface CartState {
@@ -14,7 +16,9 @@ interface CartState {
   addItem: (item: Omit<CartItem, "quantity">) => void;
   removeItem: (id: string) => void;
   updateQuantity: (id: string, quantity: number) => void;
+  updateSize: (id: string, size: string) => void;
   getTotalItems: () => number;
+  clearCart: () => void;
 }
 
 export const useCartStore = create<CartState>((set, get) => ({
@@ -31,7 +35,15 @@ export const useCartStore = create<CartState>((set, get) => ({
         };
       } else {
         return {
-          items: [...state.items, { ...item, quantity: 1 }],
+          items: [
+            ...state.items,
+            {
+              ...item,
+              quantity: 1,
+              size: "",
+              availableSizes: item.availableSizes || [],
+            },
+          ],
         };
       }
     });
@@ -49,6 +61,15 @@ export const useCartStore = create<CartState>((set, get) => ({
       ),
     })),
 
+  updateSize: (id, size) =>
+    set((state) => ({
+      items: state.items.map((item) =>
+        item.id === id ? { ...item, size } : item
+      ),
+    })),
+
   getTotalItems: () =>
     get().items.reduce((total, item) => total + item.quantity, 0),
+
+  clearCart: () => set({ items: [] }),
 }));
