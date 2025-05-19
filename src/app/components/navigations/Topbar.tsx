@@ -9,7 +9,7 @@ const Topbar = () => {
             <a href="tel:+8801973547022">+880 1973-547022</a>
             <span>alphee.bd@gmail.com</span>
           </div>
-          <div className="flex space-x-3">
+          <div className="flex space-x-1 md:space-x-3">
             <a
               href="https://www.facebook.com/profile.php?id=61572945527439"
               target="_blank"

@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
 
-const ShopPageContent = dynamic(() => import("../components/ShopPageContent"), {
+const ShopPageContent = dynamic(() => import("../../components/ShopPageContent"), {
   ssr: false,
 });
 

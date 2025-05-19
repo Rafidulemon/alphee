@@ -8,8 +8,8 @@ import Topbar from "./Topbar";
 import { navItems } from "@/app/constants/navItems";
 import DesktopNav from "./DesktopNav";
 import MobileNav from "./MobileNav";
-import { useCartStore } from "@/app/store/cartStore";
-import { products } from "@/app/data/products"; // ✅ import product list
+import { useCartStore } from "@/app/(main)/store/cartStore";
+import { products } from "@/app/data/products";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

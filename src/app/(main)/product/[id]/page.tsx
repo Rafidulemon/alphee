@@ -6,7 +6,7 @@ import { useState } from "react";
 import { ShoppingCart, ArrowRight } from "lucide-react";
 import products from "@/app/data/products.json";
 import ProductCard from "@/app/components/product/ProductCard";
-import { useCartStore } from "@/app/store/cartStore";
+import { useCartStore } from "@/app/(main)/store/cartStore";
 
 export default function ProductDetailsPage() {
   const { id } = useParams();

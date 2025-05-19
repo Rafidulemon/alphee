@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { X, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { MdDeleteForever } from "react-icons/md";
 import { useCartStore } from "../store/cartStore";
 
 export default function CartPage() {
@@ -86,7 +87,7 @@ export default function CartPage() {
                         <select
                           value={item.size ?? ""}
                           onChange={(e) => updateSize(item.id, e.target.value)}
-                          className="bg-black border border-gray-600 rounded py-1 px-2 text-sm text-white"
+                          className="cursor-pointer bg-black border border-gray-600 rounded py-1 px-2 text-sm text-white"
                         >
                           <option value="" disabled className="bg-black">
                             Select size
@@ -105,9 +106,9 @@ export default function CartPage() {
                     </div>
                     <button
                       onClick={() => removeItem(item.id)}
-                      className="absolute top-2 right-2 text-gray-400 hover:text-red-500"
+                      className="cursor-pointer absolute top-2 right-2 text-gray-400 hover:text-red-500"
                     >
-                      <X size={18} />
+                      <MdDeleteForever size={20} />
                     </button>
                   </div>
                 ))}

@@ -1,11 +1,11 @@
 "use client";
 
-import CategoryCard from "./components/CategoryCard";
-import Banner from "./components/Home/Banner";
-import ProductCard from "./components/product/ProductCard";
+import CategoryCard from "../components/CategoryCard";
+import Banner from "../components/Home/Banner";
+import ProductCard from "../components/product/ProductCard";
 import { useRouter } from "next/navigation";
-import productsData from "../app/data/products.json";
-import TestimonialSection from "./components/Home/Testimonial";
+import productsData from "../../app/data/products.json";
+import TestimonialSection from "../components/Home/Testimonial";
 
 const best_selling = productsData
   .filter((product) => product.isBestSelling)

@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Header from "./components/navigations/Header";
-import Footer from "./components/navigations/Footer";
 
 export const metadata: Metadata = {
   title: "Alphee",
@@ -63,9 +61,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased`}>
-        <Header />
         <div className="bg-black min-h-screen">{children}</div>
-        <Footer />
       </body>
     </html>
   );

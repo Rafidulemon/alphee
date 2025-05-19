@@ -1,5 +1,5 @@
-import productsData from "../data/products.json";
-import ProductCard from "../components/product/ProductCard";
+import productsData from "../../data/products.json";
+import ProductCard from "../../components/product/ProductCard";
 
 export default function FlashSalePage() {
   const flashSaleProducts = productsData.filter(

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ShoppingCart, ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useCartStore } from "@/app/store/cartStore";
+import { useCartStore } from "@/app/(main)/store/cartStore";
 
 interface ProductCardProps {
   id: string;
