@@ -16,20 +16,20 @@ export default function Footer() {
               <Image
                 src="/images/logo.png"
                 alt="Alphee Logo"
-                width={150}
+                width={100}
                 height={40}
                 className="mb-4"
               />
             </Link>
             <div>
-              <p className="text-gray-400 text-sm mt-2">
+              <p className="text-gray-200 text-sm mt-2">
                 Hajee Amju Miah Tower (4th Floor), Holding No. 584
                 <br />
                 Arakan Road, Ward No: 07, Patiya
                 <br />
                 Chittagong-4370
               </p>
-              <p className="text-gray-400 text-sm mt-2">
+              <p className="text-gray-200 text-sm mt-2">
                 Email:{" "}
                 <a
                   href="mailto:alphee.bd@gmail.com"
@@ -48,23 +48,26 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Quick Links</h3>
-            <ul className="space-y-2 text-gray-400 text-sm">
-              <li>
-                <Link href="/">Home</Link>
-              </li>
-              <li>
-                <Link href="/shop">Shop</Link>
-              </li>
-              <li>
-                <Link href="/best-selling">Best Selling</Link>
-              </li>
-              <li>
-                <Link href="/flash-sale">Flash Sale</Link>
-              </li>
-            </ul>
+            <div className="flex flex-col justify-between">
+              <h3 className="text-secondary font-semibold mb-4">Quick Links</h3>
+              <ul className="space-y-2 text-gray-400 text-sm">
+                <li className="transform transition-transform duration-300 hover:scale-105 hover:text-primary hover:font-bold">
+                  <Link href="/">Home</Link>
+                </li>
 
-            <div className="flex-1 md:hidden">
+                <li className="transform transition-transform duration-300 hover:scale-105 hover:text-primary hover:font-bold">
+                  <Link href="/shop">Shop</Link>
+                </li>
+                <li className="transform transition-transform duration-300 hover:scale-105 hover:text-primary hover:font-bold">
+                  <Link href="/best-selling">Best Selling</Link>
+                </li>
+                <li className="transform transition-transform duration-300 hover:scale-105 hover:text-primary hover:font-bold">
+                  <Link href="/flash-sale">Flash Sale</Link>
+                </li>
+              </ul>
+            </div>
+
+            <div className="flex-1">
               <h3 className="text-white font-semibold mt-4 md:mt-6">
                 Follow Us On:
               </h3>
@@ -91,65 +94,37 @@ export default function Footer() {
 
           {/* Customer Service */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Customer Service</h3>
+            <h3 className="text-secondary font-semibold mb-4">
+              Customer Service
+            </h3>
             <ul className="space-y-2 text-gray-400 text-sm">
-              <li>
-                <Link href="/refund-policy">Refund Policy</Link>
-              </li>
-              <li>
-                <Link href="/privacy-policy">Privacy Policy</Link>
-              </li>
-              <li>
+              <li className="transform transition-transform duration-300 hover:scale-105 hover:text-primary hover:font-bold">
                 <Link href="/about-us">About Us</Link>
               </li>
-              <li>
+              <li className="transform transition-transform duration-300 hover:scale-105 hover:text-primary hover:font-bold">
+                <Link href="/terms">Terms & Conditions</Link>
+              </li>
+              <li className="transform transition-transform duration-300 hover:scale-105 hover:text-primary hover:font-bold">
+                <Link href="/privacy-policy">Privacy Policy</Link>
+              </li>
+              <li className="transform transition-transform duration-300 hover:scale-105 hover:text-primary hover:font-bold">
+                <Link href="/refund-policy">Cancellation & Refund Policy</Link>
+              </li>
+              <li className="transform transition-transform duration-300 hover:scale-105 hover:text-primary hover:font-bold">
+                <Link href="/faq">FAQS</Link>
+              </li>
+              <li className="transform transition-transform duration-300 hover:scale-105 hover:text-primary hover:font-bold">
                 <Link href="/contact-us">Contact Us</Link>
               </li>
-              <li>
-                <Link href="/sitemap">Sitemap</Link>
+              <li className="transform transition-transform duration-300 hover:scale-105 hover:text-primary hover:font-bold">
+                <Link href="/location">Store Locator</Link>
               </li>
             </ul>
-
-            <div className="hidden md:block">
-              <h3 className="text-white font-semibold mt-4 md:mt-6">
-                Follow Us On:
-              </h3>
-              <div className="flex flex-row space-x-4 mt-2">
-                <FaFacebook
-                  className="w-5 h-5 text-[#1877F2] hover:text-white cursor-pointer"
-                  href="https://www.facebook.com/profile.php?id=61572945527439"
-                  target="_blank"
-                  aria-label="Facebook"
-                />
-                <FaInstagram
-                  className="w-5 h-5 text-[#DD2A7B] hover:text-white cursor-pointer"
-                  href="https://www.instagram.com/alphee.bd/"
-                  target="_blank"
-                  aria-label="Instagram"
-                />
-
-                <FaTwitter className="w-5 h-5 text-[#1DA1F2] hover:text-white cursor-pointer" />
-
-                <FaLinkedin className="w-5 h-5 text-[#0077B5] hover:text-white cursor-pointer" />
-              </div>
-            </div>
           </div>
         </div>
 
-        {/* Map Section */}
-        <div className="rounded-lg overflow-hidden">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d230.72382665834687!2d91.98129678825846!3d22.293847802776842!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30ad230009b2e35b%3A0x1632e5e805ad9bd!2sAlphee!5e0!3m2!1sen!2sbd!4v1747390765145!5m2!1sen!2sbd"
-            width="100%"
-            height="300"
-            loading="lazy"
-            allowFullScreen
-            className="w-full h-72 border-none"
-          ></iframe>
-        </div>
-
         {/* Bottom Section */}
-        <div className="flex flex-col md:flex-row items-center justify-between py-6 border-t border-gray-700">
+        <div className="flex flex-col md:flex-row items-center justify-between pb-6">
           <p className="text-gray-400 text-sm mb-2 md:mb-0">
             &copy; {new Date().getFullYear()} Alphee. All rights reserved.
           </p>
