@@ -10,6 +10,7 @@ import DesktopNav from "./DesktopNav";
 import MobileNav from "./MobileNav";
 import { useCartStore } from "@/app/(main)/store/cartStore";
 import { products } from "@/app/data/products";
+import { useRef, useEffect } from "react";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -17,6 +18,26 @@ export default function Header() {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchFocused, setSearchFocused] = useState(false);
   const cartCount = useCartStore((state) => state.getTotalItems());
+  const searchRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        searchRef.current &&
+        !searchRef.current.contains(event.target as Node)
+      ) {
+        setMobileSearchOpen(false);
+      }
+    };
+
+    if (mobileSearchOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [mobileSearchOpen]);
 
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -33,7 +54,11 @@ export default function Header() {
           className="md:hidden text-primary"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
-          {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          {mobileMenuOpen ? (
+            <X className="w-6 h-6" />
+          ) : (
+            <Menu className="w-6 h-6" />
+          )}
         </button>
 
         {/* Logo */}
@@ -98,7 +123,10 @@ export default function Header() {
 
           {/* Mobile Search Input */}
           {mobileSearchOpen && (
-            <div className="absolute top-16 left-4 right-4 z-20">
+            <div
+              ref={searchRef}
+              className="absolute top-16 left-4 right-4 z-20"
+            >
               <input
                 type="text"
                 placeholder="Search..."
@@ -106,7 +134,7 @@ export default function Header() {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full border px-4 py-2 text-sm rounded shadow-md bg-white"
               />
-              <ul className="bg-white shadow rounded mt-1 max-h-60 overflow-y-auto text-sm text-black">
+              <ul className="bg-black shadow rounded mt-1 max-h-60 overflow-y-auto text-sm text-white">
                 {filteredProducts.length > 0 ? (
                   filteredProducts.map((product) => (
                     <li key={product.id}>
@@ -125,11 +153,17 @@ export default function Header() {
             </div>
           )}
 
-          <Link href="/account" className="text-secondary hover:text-primary hidden md:inline">
+          <Link
+            href="/account"
+            className="text-secondary hover:text-primary hidden md:inline"
+          >
             <User className="w-5 h-5" />
           </Link>
 
-          <Link href="/cart" className="relative text-secondary hover:text-primary">
+          <Link
+            href="/cart"
+            className="relative text-secondary hover:text-primary"
+          >
             <ShoppingCart className="w-5 h-5" />
             <span className="absolute -top-2 -right-2 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-bold leading-none text-white bg-red-600 rounded-full">
               {cartCount}
@@ -139,7 +173,10 @@ export default function Header() {
       </div>
 
       {mobileMenuOpen && (
-        <MobileNav navItems={navItems} onClose={() => setMobileMenuOpen(false)} />
+        <MobileNav
+          navItems={navItems}
+          onClose={() => setMobileMenuOpen(false)}
+        />
       )}
 
       <DesktopNav navItems={navItems} />
