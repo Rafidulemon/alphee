@@ -6,7 +6,6 @@ import ProductCard from "../components/product/ProductCard";
 import productsData from "../data/products.json";
 
 const rawProducts = [...productsData];
-
 const categories = ["All", ...new Set(rawProducts.map((p) => p.category))];
 const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
 
@@ -19,6 +18,7 @@ const ShopPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortOption, setSortOption] = useState<SortOption>("default");
   const [inStockOnly, setInStockOnly] = useState(false);
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
   useEffect(() => {
     if (categoryFromQuery && categories.includes(categoryFromQuery)) {
@@ -34,29 +34,49 @@ const ShopPage = () => {
 
   // Filter by stock
   if (inStockOnly) {
-    filteredProducts = filteredProducts.filter((product) => product.isSoldOut === false);
+    filteredProducts = filteredProducts.filter((product) => !product.isSoldOut);
   }
 
   // Sort
   switch (sortOption) {
     case "priceLowHigh":
-      filteredProducts.sort((a, b) => (a.discountedPrice || a.regularPrice) - (b.discountedPrice || b.regularPrice));
+      filteredProducts.sort(
+        (a, b) => (a.discountedPrice || a.regularPrice) - (b.discountedPrice || b.regularPrice)
+      );
       break;
     case "priceHighLow":
-      filteredProducts.sort((a, b) => (b.discountedPrice || b.regularPrice) - (a.discountedPrice || a.regularPrice));
+      filteredProducts.sort(
+        (a, b) => (b.discountedPrice || b.regularPrice) - (a.discountedPrice || a.regularPrice)
+      );
       break;
     case "nameAZ":
       filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
       break;
     default:
-      filteredProducts.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+      filteredProducts.sort(
+        (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      );
       break;
   }
 
   return (
-    <div className="flex w-full mx-auto p-4 md:p-6">
-      {/* Sidebar */}
-      <div className="md:block hidden w-1/4 bg-[#131313] text-white rounded-xl p-6 mr-6">
+    <div className="flex flex-col md:flex-row w-full mx-auto p-4 md:p-6">
+      {/* Mobile Filter Toggle */}
+      <div className="md:hidden w-full mb-4">
+        <button
+          onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)}
+          className="bg-primary text-black px-4 py-2 rounded font-medium w-full"
+        >
+          {mobileFiltersOpen ? "Hide Filters" : "Show Filters"}
+        </button>
+      </div>
+
+      {/* Sidebar Filters */}
+      <div
+        className={`${
+          mobileFiltersOpen ? "block" : "hidden"
+        } md:block w-full md:w-1/4 bg-[#131313] text-white rounded-xl p-6 mb-6 md:mb-0 md:mr-6`}
+      >
         <h2 className="text-lg font-semibold">Categories</h2>
         <ul className="space-y-4 mt-4">
           {categories.map((category) => (

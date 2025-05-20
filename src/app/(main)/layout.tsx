@@ -30,7 +30,7 @@ export default function MainLayout({
           )}
         </Link>
         <a
-          href="https://m.me/alphee"
+          href="https://m.me/61572945527439"
           target="_blank"
           rel="noopener noreferrer"
           className="fixed bottom-4 right-2 md:right-4 z-50 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:scale-110 transition"
