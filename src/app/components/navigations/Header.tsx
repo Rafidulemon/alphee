@@ -19,6 +19,17 @@ export default function Header() {
   const [searchFocused, setSearchFocused] = useState(false);
   const cartCount = useCartStore((state) => state.getTotalItems());
   const searchRef = useRef<HTMLDivElement>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
+  
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -44,11 +55,20 @@ export default function Header() {
   );
 
   return (
-    <header className="bg-[#111111] shadow-md border-b border-gray-200 relative">
-      <Topbar />
+    <header
+      className={`z-50 w-full transition-all duration-300 ease-in-out transform ${
+        isScrolled
+          ? "fixed top-0 bg-[#111111] shadow-lg border-b border-gray-800"
+          : "bg-[#111111] relative"
+      }`}
+    >
+      {!isScrolled && (
+        <Topbar />
+      )}
+      
 
       {/* Main Header */}
-      <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <div className="max-w-7xl mx-auto px-4 py-2 md:py-4 flex justify-between items-center">
         {/* Mobile Menu */}
         <button
           className="md:hidden text-primary"
@@ -73,8 +93,8 @@ export default function Header() {
           <Image
             src="/images/logo.png"
             alt="Alphee Logo"
-            width={80}
-            height={60}
+            width={70}
+            height={50}
             className="object-contain md:hidden"
           />
         </Link>

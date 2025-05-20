@@ -13,7 +13,7 @@ export default function MainLayout({
 }>) {
   const cartCount = useCartStore((state) => state.getTotalItems());
   return (
-    <html lang="en">
+    <>
       <body className={`antialiased`}>
         <Header />
         <div className="bg-black min-h-screen">{children}</div>
@@ -47,6 +47,6 @@ export default function MainLayout({
           </svg>
         </a>
       </body>
-    </html>
+    </>
   );
 }

@@ -31,7 +31,7 @@ export default function ProductCard({
   const router = useRouter();
 
   return (
-    <div className="w-[150px] h-[350px] md:w-[300px] md:h-[450px] group block rounded-2xl overflow-hidden shadow hover:shadow-lg transition-all duration-300 bg-[#131313] flex flex-col justify-between">
+    <div className="group block rounded-2xl overflow-hidden shadow hover:shadow-lg transition-all duration-300 bg-[#131313] flex flex-col justify-between">
       {/* Product Image & Labels */}
       <div className="w-full flex flex-col">
         <Link href={`/product/${id}`}>
